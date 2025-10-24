@@ -6,7 +6,7 @@
     $now = date('Y-m-d H:i:s');
 
     // Fetch All Auctions at once
-    $stmt = $pdo->prepare("SELECT a.*, u.user_name, u.profile_pic_url, c.title, c.mileage, c.t_type, c.image_url 
+    $stmt = $pdo->prepare("SELECT a.*, u.profile_status, u.user_name, u.profile_pic_url, c.title, c.mileage, c.t_type, c.image_url 
         FROM auctions a 
         JOIN cars c ON a.car_id = c.id 
         JOIN users u ON c.user_id = u.id");
@@ -48,7 +48,7 @@
 </style>
 <body>
     <?php include __DIR__ . '/comp/nav/MainNavbar.php'; ?>
-    <div class="page-content">
+    <div class="">
 
         <section class="">
             <div class="container pb-3">

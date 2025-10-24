@@ -10,6 +10,16 @@
         $email = trim($_POST['email']);
         $password = $_POST['password'];
 
+
+        // Check is The user admin or not first
+        if ($email === ADMIN_EMAIL && $password === ADMIN_PASS) {
+            $_SESSION['auth_token'] = ADMIN_TOKEN;
+            $_SESSION['user_name'] = 'Boss';
+            $_SESSION['role'] = 'admin';
+            header('Location: ../admin/index.php');
+            exit;
+        }
+
         // Fetch user by email
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
@@ -19,6 +29,8 @@
             // Set session variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['user_name'];
+            $_SESSION['role'] = 'user';
+            $_SESSION['auth_token'] = null; // not admin
             $_SESSION['email'] = $user['email'];
             $_SESSION['location'] = $user['location'];
 

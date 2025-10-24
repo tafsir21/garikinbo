@@ -18,9 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Keep old pic if not updated
     $profile_pic_url = $user['profile_pic_url'];
 
-        // Handle profile picture upload
-        $profile_pic_url = null;
-
         if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === UPLOAD_ERR_OK) {
             $file = $_FILES['profile_pic'];
             $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
@@ -139,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container pt-5 pb-5">
             <div class="row justify-content-center">
                 <div class="col-xl-6 col-lg-8 col-md-10 col-sm-12 col-12">
-                    <a href="<?php echo $main_url?>/user/index.php?u=<?php echo $user['user_name']?>">Go back</a>
+                    <button class="btn btn-app btn-outline border mb-0 fs-5" onclick="history.go(-1);"><i class="bi bi-arrow-left"></i> Back</button>
                     <div class="mt-3 card app-form-card p-4">
 
                         <h2 class="text-center mb-4">Edit Profile</h2>
@@ -181,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input 
                                     type="text" 
                                     class="form-control" 
-                                    value="<?php echo htmlspecialchars($user['full_name']); ?>"
+                                    value="<?php echo $user['full_name']; ?>"
                                     name="full_name" 
                                     id="fullnameInput" 
                                     placeholder="Full Name"

@@ -36,7 +36,7 @@
 
     // Fetch user's auctions (posts)
     // Fetch All Auctions at once
-    $stmt = $pdo->prepare("SELECT a.*, u.user_name, u.profile_pic_url, c.title, c.mileage, c.t_type, c.image_url 
+    $stmt = $pdo->prepare("SELECT a.*, u.profile_status, u.user_name, u.profile_pic_url, c.title, c.mileage, c.t_type, c.image_url 
         FROM auctions a
         JOIN cars c ON a.car_id = c.id 
         JOIN users u ON c.user_id = u.id
@@ -133,7 +133,7 @@
             <?php } else { ?>
                 <div class="container">
                 <?php 
-                    if ($user['user_id'] === $_SESSION['id']) {
+                    if ($user_profile['id'] === $_SESSION['user_id']) {
                         ?>
                             <div class="alert fs-5 text-center">
                                 Hello <b><?php echo $user['full_name']; ?></b> You don't have any post to show <a class="ms-3 btn btn-app btn-success" href="auction/create.php">Create Post</a>
@@ -151,9 +151,9 @@
             <?php } ?>            
         </div>
     
-        <?php include ROOT_PATH . "comp/nav/MainFooter.php"; ?>
 
     </div>
+        <?php include ROOT_PATH . "comp/nav/MainFooter.php"; ?>
 
     <script src="<?php echo $main_url;?>/lib/js/bootstrap.js"></script>
 

@@ -13,11 +13,12 @@
     $min_price = isset($_GET['min_price']) ? trim($_GET['min_price']) : "";
     $max_price = isset($_GET['max_price']) ? trim($_GET['max_price']) : "";
     $status = isset($_GET['status']) ? trim($_GET['status']) : "";
+    $u_status = isset($_GET['u_status']) ? trim($_GET['u_status']) : "";
 
 
     // Base SQL query
     $sql = "
-        SELECT a.*, u.user_name, u.profile_pic_url, 
+        SELECT a.*, u.profile_status, u.user_name, u.profile_pic_url, 
             c.title, c.mileage, c.t_type, c.image_url, c.make, c.model, c.des, c.fuel_type, a.start_price
         FROM auctions a
         JOIN cars c ON a.car_id = c.id
@@ -66,6 +67,10 @@
         $sql .= " AND a.start_time > NOW()";
     }
 
+    if ($u_status === "verified") {
+        $sql .= " AND u.profile_status = 'verified'";
+    }
+
     $sql .= " ORDER BY a.created_at DESC";
 
     $stmt = $pdo->prepare($sql);
@@ -93,28 +98,42 @@
             <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12">
                 <div class="card mb-3 p-2">
                     <form method="get" action="search.php" class="p-3">
-                        <input type="hidden" name="q" value="<?php echo htmlspecialchars($q); ?>">
-                        
-                        <!-- Status Buttons -->
+                            <input type="hidden" name="q" value="<?php echo htmlspecialchars($q); ?>">
+                            <input type="hidden" name="status" value="<?php echo htmlspecialchars($status); ?>">
+                            <input type="hidden" name="u_status" value="<?php echo htmlspecialchars($u_status); ?>">                    
+                        <!-- Auction Status -->
                         <div class="mb-3">
-                            <label for="make" class="form-label">Status</label>
-                            <div class="d-flex">
-                                <a 
-                                    class="border btn btn-app me-2 <?php echo ($status=='all') ? 'btn-dark' : ''; ?>"
-                                    href="search.php?status=all&q=<?php echo urlencode($q); ?>"
-                                >All</a>
-
-                                <a 
-                                    class="border btn btn-app me-2 <?php echo ($status=='live') ? 'btn-dark' : ''; ?>"
-                                    href="search.php?status=live&q=<?php echo urlencode($q); ?>"
-                                >Live</a>
-
-                                <a 
-                                    class="border btn btn-app <?php echo ($status=='upcoming') ? 'btn-dark' : ''; ?>"
-                                    href="search.php?status=upcoming&q=<?php echo urlencode($q); ?>"
-                                >Upcoming</a>
+                            <label class="form-label">Auction Status</label>
+                            <div class="d-flex flex-wrap gap-2">
+                                <?php
+                                    $statuses = ['all' => 'All', 'live' => 'Live', 'upcoming' => 'Upcoming'];
+                                    foreach ($statuses as $key => $label):
+                                ?>
+                                    <a 
+                                        class="border btn btn-app <?php echo ($status == $key) ? 'btn-dark' : ''; ?>"
+                                        href="search.php?status=<?php echo $key; ?>&u_status=<?php echo urlencode($u_status); ?>&q=<?php echo urlencode($q); ?>"
+                                    ><?php echo $label; ?></a>
+                                <?php endforeach; ?>
                             </div>
                         </div>
+
+
+                        <!-- User Type -->
+                        <div class="mb-3">
+                            <label class="form-label">User Type</label>
+                            <div class="d-flex flex-wrap gap-2">
+                                <?php
+                                    $u_statuses = ['all' => 'All', 'verified' => 'Verified'];
+                                    foreach ($u_statuses as $key => $label):
+                                ?>
+                                    <a 
+                                        class="border btn btn-app <?php echo ($u_status == $key) ? 'btn-dark' : ''; ?>"
+                                        href="search.php?u_status=<?php echo $key; ?>&status=<?php echo urlencode($status); ?>&q=<?php echo urlencode($q); ?>"
+                                    ><?php echo $label; ?></a>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
 
 
                         <!-- Make -->

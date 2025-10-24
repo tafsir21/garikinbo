@@ -9,7 +9,22 @@
 
         <!-- Profile pic -->
         <div class="profile-header-content">
-            <img class="profile-user-img profile-pic mb-3" style="width: 200px; height: 200px; border: 1px solid #9f9f9f;" src="<?php echo $main_url?>/uploads/users/<?php echo $user_profile['profile_pic_url']?>" alt="Profile Picture">
+            <div class="profile-pic-container mb-4">
+                <img 
+                    class="img-fluid"
+                    src="<?php echo $main_url?>/uploads/users/<?php echo $user_profile['profile_pic_url']; ?>" 
+                    alt="">
+                
+                <?php 
+                    if ($user_profile['profile_status'] === 'verified') {
+                        ?>
+                            <div class="profile-badge" style="border: 6px solid #fff;">
+                                <i class="bi bi-check-lg"></i>
+                            </div>
+                        <?php
+                    }
+                ?>
+            </div>      
             <h2 class="mb-0"><?php echo $user_profile['full_name']; ?></h2>
             <p class="mb-0">@<?php echo $user_profile['user_name']; ?></p>
         </div>

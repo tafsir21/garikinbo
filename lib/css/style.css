@@ -4,6 +4,7 @@ body{
 }
 .page-content{
     margin-top: 120px;
+    margin-bottom: 120px;
     min-height: 60vh;
 }
 .bid-record-card{
@@ -435,4 +436,50 @@ body{
     .bottombar-for-mobile{
         display: block!important;
     }
+}
+.profile-pic-container{
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+.profile-pic-container img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #d3d3d3;
+}
+.profile-pic-container .profile-badge{
+    position: absolute;
+    bottom: 0;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: #8c52ff;
+    color: aliceblue;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    border: 6px solid #f1f1f1;
+}
+.profile-pic-container .profile-badge i{
+
+}
+.profile-pic-sm{
+    width: 50px;
+    height: 50px;
+}
+.profile-pic-sm img{
+    width: 50px;
+    height: 50px;
+}
+.profile-pic-sm .profile-badge{
+    font-size: 15px;
+    width: 20px;
+    height: 20px;
+    bottom: -4px;
+    right: -2px;
+    border: 1px solid #fff!important;
 }

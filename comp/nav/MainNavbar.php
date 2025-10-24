@@ -1,9 +1,16 @@
 <?php 
   $current_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+  include ROOT_PATH . 'comp/system_message/Navbar_TopMessages.php';
 ?>
 
-<nav class="navbar-for-pc navbar navbar-expand-lg bg-light shadow-sm app-nav">
-  <div class="container">
+
+
+
+<nav class="navbar-for-pc navbar navbar-expand-lg bg-light shadow-sm app-nav p-0">
+  
+  <?php verification_message($user, $main_url); ?>
+
+  <div class="container py-2">
     <!-- Left: Logo -->
     <a class="navbar-brand fw-bold" href="<?php echo $main_url?>">
       <img src="<?php echo $main_url; ?>/logo2.png" alt="Logo" width="110" class="rounded d-inline-block align-text-middle">
@@ -26,9 +33,17 @@
 
     <!-- Right: Nav Links -->
     <div class="d-flex align-items-center app-nav-link">
-      <a class="nav-link text-uppercase fw-bold px-3" href="<?php echo $main_url?>">Home</a>
-      <a class="nav-link text-uppercase fw-bold px-3" href="<?php echo $main_url?>">About</a>
-      <a class="btn btn-dark mx-2 btn-app" href="<?php echo $main_url?>/user/auction/create.php">Post car</a> 
+      <a class="nav-link text-uppercase fw-bold px-3 d-flex align-items-center justify-content-center" href="<?php echo $main_url?>"><i class="bi bi-house-door fs-4 me-2"></i> <span class="pt-1">Home</span></a>
+      <a class="nav-link text-uppercase fw-bold px-3 d-flex align-items-center justify-content-center" href="<?php echo $main_url?>"><span class="pt-1">About</span></a>
+      <?php
+        if(!isset($_SESSION['auth_token']) || isset($_SESSION['auth_token']) !== ADMIN_TOKEN){
+            // check the token 
+            // admin_token_check();
+            ?>
+              <a class="btn btn-dark mx-2 btn-app" href="<?php echo $main_url?>/user/auction/create.php"><i class="bi bi-plus-lg"></i> Post</a> 
+            <?php
+        }
+      ?>
 
       <?php 
         if (isset($_SESSION['user_id']) == true ) {
@@ -46,7 +61,13 @@
               </ul>
             </div>
           <?php
-        }else {
+        }else if(isset($_SESSION['auth_token']) || isset($_SESSION['auth_token']) == ADMIN_TOKEN){
+            // check the token 
+            admin_token_check();
+            ?>
+              <a class="btn btn-primary btn-app" href="<?php echo $main_url; ?>/admin/">Admin Panel</a>
+            <?php
+        } else {
           ?>
             <a class="btn btn-primary btn-app" href="<?php echo $main_url; ?>/auth/signin.php">Sign In</a>
           <?php
@@ -60,8 +81,10 @@
 
 
 <!-- Navbar For Mobile Device -->
-<nav class="navbar-for-mobile navbar navbar-expand-lg bg-light shadow-sm app-nav">
-    <div class="container">
+<nav class="navbar-for-mobile navbar navbar-expand-lg bg-light shadow-sm app-nav p-0">
+    <?php verification_message($user, $main_url); ?>
+ 
+    <div class="container py-2">
         <div class="d-flex align-items-center justify-content-between w-100 pe-1">
             <a class="navbar-brand fw-bold" href="<?php echo $main_url?>">
               <img src="<?php echo $main_url; ?>/logo2.png" alt="Logo" width="110" class="rounded d-inline-block align-text-middle">
@@ -75,7 +98,7 @@
                   </button>  
                 </div>  -->
                 <?php 
-                  if (isset($_SESSION['user_id']) == true ) {
+                  if (isset($_SESSION['user_id']) == true || isset($_SESSION['role']) === 'user') {
                     ?>
                       <!-- Profile Dropdown -->
                       <div class="navbar-list dropdown">
@@ -90,7 +113,13 @@
                         </ul>
                       </div>
                     <?php
-                  }else {
+                  }else if(isset($_SESSION['auth_token']) || isset($_SESSION['auth_token']) == ADMIN_TOKEN){
+                      // check the token 
+                      // admin_token_check();
+                      ?>
+                        <a class="btn btn-primary btn-app" href="<?php echo $main_url; ?>/admin/">Admin Panel</a>
+                      <?php
+                  } else {
                     ?>
                       <a class="btn btn-primary btn-app" href="<?php echo $main_url; ?>/auth/signin.php">Sign In</a>
                     <?php

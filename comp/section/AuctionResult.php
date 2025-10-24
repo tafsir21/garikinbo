@@ -3,6 +3,8 @@
         <div class="row justify-content-center">
             <div class="col-lg-10 col-xl-8">
                 <!-- Main Result Card -->
+                <button class="btn btn-app btn-primary btn-dark mb-3" onclick="history.go(-1);"><i class="bi bi-arrow-left"></i> Back</button>
+
                 <div class="card shadow-lg border-0 overflow-hidden">
                     <!-- Header -->
 
@@ -234,10 +236,13 @@
                             <!-- Transaction Details Information -->
                             <?php if ($auction['buyer_id'] !== null || $auction['user_id'] === $_SESSION['user_id']): ?>
                                 <?php 
-                                    // Fetching the buyer information
-                                    $buyerStmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-                                    $buyerStmt->execute([$auction['buyer_id']]);
-                                    $buyer = $buyerStmt->fetch(PDO::FETCH_ASSOC);
+                                    if (!empty($auction['buyer_id'])) {
+                                        $buyerStmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+                                        $buyerStmt->execute([$auction['buyer_id']]);
+                                        $buyer = $buyerStmt->fetch(PDO::FETCH_ASSOC);
+                                    } else {
+                                        $buyer = null;
+                                    }
                                 ?>
 
                                 <div class="card border-0 shadow-sm mb-4">
@@ -300,13 +305,13 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <h6 class="text-muted mb-3">Next Steps</h6>
-                                                <ul class="list-unstyled small">
+                                                <ul class="list-unstyled">
                                                     <?php if ($auction['buyer_id'] === $_SESSION['user_id']): ?>
-                                                        <li class="mb-2">✅ Contact the seller within 24 hours</li>
+                                                        <li class="mb-2">✅ Contact the seller within 24 hours. If He or She not respond <a href="<?php echo $main_url?>/user/report.php?to=<?php echo $auction['buyer_id']; ?>">Report Us</a></li>
                                                         <li class="mb-2">📞 Arrange payment and pickup</li>
                                                         <li class="mb-2">📝 Complete ownership transfer</li>
                                                     <?php elseif ($auction['user_id'] === $_SESSION['user_id']): ?>
-                                                        <li class="mb-2">✅ Wait for buyer to contact you</li>
+                                                        <li class="mb-2">✅ Wait for buyer to contact you. If He or She not respond <a href="<?php echo $main_url?>/user/report.php?to=<?php echo $auction['buyer_id']; ?>">Report Us</a></li>
                                                         <li class="mb-2">💰 Arrange payment method</li>
                                                         <li class="mb-2">🚗 Prepare vehicle for handover</li>
                                                     <?php else: ?>

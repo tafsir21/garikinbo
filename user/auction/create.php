@@ -20,7 +20,8 @@
 
 
     <div class="container page-content">
-        <div class="row mt-5">
+        <button class="btn btn-app btn-outline border mb-3 fs-5" onclick="history.go(-1);"><i class="bi bi-arrow-left"></i> Back</button>
+        <div class="row">
             <div class="col-xl-3 col-lg-2 col-md-12 col-sm-12 col-12"></div>
             <div class="col-xl-6 col-lg-8 col-md-12 col-sm-12 col-12">
                 <p class="mb-4 text-center fs-2">Create Acution</p>

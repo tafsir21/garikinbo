@@ -29,7 +29,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Delete Auction</title>
-    
+
         <!-- Css Files -->
         <?php include ROOT_PATH . "lib/css/app_css.php"; ?>
     </head>
@@ -39,8 +39,9 @@
         include ROOT_PATH . "comp/nav/MainNavbar.php"; 
     ?>
 
-
     <div class="container page-content">    
+        <button class="btn btn-app btn-primary border mb-3" onclick="history.go(-1);"><i class="bi bi-arrow-left"></i> No, Cancel</button>
+
         <p class="fs-5">
             <b><?php echo $user['full_name']?></b> Are you sure to Delete <b>"<?php echo $auction['title']?>"</b> post ? <a href="<?php echo $main_url?>/api/delete/delete_bid_post.php?auction_id=<?php echo $auction['auction_id']; ?>" class="btn btn-danger btn-app">Yes, Delete</a>
         </p>

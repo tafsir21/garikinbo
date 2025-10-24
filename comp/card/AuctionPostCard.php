@@ -34,10 +34,22 @@
                         <a class="text-dark d-flex mb-2 align-items-center" 
                         href="<?php echo $main_url; ?>/user/index.php?u=<?php echo $auction['user_name']; ?>">
                             <div class="me-2">
-                                <img style="width: 35px; height: 35px" 
-                                    src="<?php echo $main_url?>/uploads/users/<?php echo $auction['profile_pic_url']?>" 
-                                    alt="" 
-                                    class="profile-pic profile-pic-sm">
+                                <div class="profile-pic-container profile-pic-sm">
+                                    <img 
+                                        class="img-fluid"
+                                        src="<?php echo $main_url?>/uploads/users/<?php echo $auction['profile_pic_url']; ?>" 
+                                        alt="">
+                                    
+                                    <?php 
+                                        if ($auction['profile_status'] === 'verified') {
+                                            ?>
+                                                <div class="profile-badge" style="border: 6px solid #fff;">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </div>
+                                            <?php
+                                        }
+                                    ?>
+                                </div>
                             </div>
                             <small><?php echo $auction['user_name']?></small>                                                        
                         </a>
