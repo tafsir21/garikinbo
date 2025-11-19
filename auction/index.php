@@ -318,6 +318,24 @@
             let auctionId = <?php echo $auction_id; ?>;
             let refreshInterval = 3000; // 3 seconds
 
+            // Quick Add Buttons Functionality
+            $('.quick-add').on('click', function() {
+                let increment = parseInt($(this).data('increment'));
+                let input = $('#bidIncrementInput');
+                let currentValue = parseFloat(input.val()) || 0;
+
+                // Add the increment to current value
+                let newValue = currentValue + increment;
+
+                // Optional: Set a minimum bid increment (e.g., at least 100)
+                if (newValue < 100) newValue = 100;
+
+                input.val(newValue);
+
+                // Optional: Trigger input event so any validations update
+                input.trigger('input');
+            });
+
             // Safely format BDT value
             function formatBDT(value) {
                 let num = parseFloat(value);
